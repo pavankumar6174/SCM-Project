@@ -10,24 +10,43 @@ import xgboost as xgb
 from sklearn.metrics import accuracy_score,mean_squared_error,classification_report,confusion_matrix
 from SBMBOT import queries_page
 from streamlit_option_menu import option_menu
+import os
 
+# # Load your dataset
+# df = pd.read_csv(r'C:\Users\gedel\Downloads\SCM-Project\Data\cleaned_data.csv',encoding='ISO-8859-1')
+# data1=pd.read_csv(r'C:\Users\gedel\Downloads\SCM-Project\Data\Dataset.csv',encoding='ISO-8859-1')
+# data=pd.concat([df,data1['Product Name']],axis=1)
 
-# Load your dataset
-df = pd.read_csv(r'C:\Users\gedel\Downloads\SCM-Project\Data\cleaned_data.csv',encoding='ISO-8859-1')
-data1=pd.read_csv(r'C:\Users\gedel\Downloads\SCM-Project\Data\Dataset.csv',encoding='ISO-8859-1')
-data=pd.concat([df,data1['Product Name']],axis=1)
+# # Load mappings from the uploaded JSON files
+# with open('../Data/dictionary.json', 'r') as file:
+#     mappings = json.load(file)
 
-# Load mappings from the uploaded JSON files
-with open('../Data/dictionary.json', 'r') as file:
+# with open('../Data/dictionary1.json', 'r') as file:
+#     new_mappings = json.load(file)
+
+#  # Load mappings and model data
+# with open('../Data/dictionary2.json', 'r') as dict1:
+#     depart = json.load(dict1)
+###############################################################################
+# Set your Streamlit app directory
+app_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Data'))
+
+# Load your dataset using relative path
+df = pd.read_csv(os.path.join(app_dir, 'cleaned_data.csv'), encoding='ISO-8859-1')
+data1 = pd.read_csv(os.path.join(app_dir, 'Dataset.csv'), encoding='ISO-8859-1')
+data = pd.concat([df, data1['Product Name']], axis=1)
+
+# Load mappings from the uploaded JSON files using relative paths
+with open(os.path.join(app_dir, 'dictionary.json'), 'r') as file:
     mappings = json.load(file)
 
-with open('../Data/dictionary1.json', 'r') as file:
+with open(os.path.join(app_dir, 'dictionary1.json'), 'r') as file:
     new_mappings = json.load(file)
 
- # Load mappings and model data
-with open('../Data/dictionary2.json', 'r') as dict1:
+# Load mappings and model data
+with open(os.path.join(app_dir, 'dictionary2.json'), 'r') as dict1:
     depart = json.load(dict1)
-
+###########################################################################3
 product_encoding=data['Product Name'].value_counts().to_dict()
 data['Product Name']=data['Product Name'].map(product_encoding)
 
