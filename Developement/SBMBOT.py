@@ -15,8 +15,18 @@ if not api_key:
 # Initialize Groq client
 client = Groq(api_key=api_key)
 
-# Load the dataset
-df = pd.read_csv('../Data/Dataset.csv',encoding='latin1')
+# # Load the dataset
+# df = pd.read_csv('../Data/Dataset.csv',encoding='latin1')
+############################################################
+
+# Set the Streamlit app directory
+app_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Data'))
+
+print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", app_dir)
+
+# Load the dataset using the correct relative path
+df = pd.read_csv(os.path.join(app_dir, 'Dataset.csv'), encoding='latin1')
+##############################################################
 
 def create_prompt(question):
     return f'''
